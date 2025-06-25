@@ -1,0 +1,14 @@
+### Test Google Apps Script Endpoint for GSE Audit
+
+POST https://script.google.com/macros/s/AKfycbyLgzMCZrrWHU5H2aGX77EUG6hL32NfwEOaR9zqlitsCrch0qI1jsKLx5U7p1iPSYjb/exec
+Content-Type: application/json
+
+{
+  "timestamp": "2025-06-25T19:00:00.000Z",
+  "businessName": "REST Client Test Co.",
+  "contactName": "VS Code Tester",
+  "email": "restclient@gse.codes",
+  "phone": "555-555-5555",
+  "website": "https://restclient.test",
+  "address": "123 Visual St, Code City"
+}
