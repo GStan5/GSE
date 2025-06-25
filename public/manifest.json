@@ -8,13 +8,19 @@
   "theme_color": "#1e3a8a",
   "icons": [
     {
-      "src": "/images/icon-192x192.png",
-      "sizes": "192x192",
+      "src": "/images/gse-logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon",
+      "sizes": "64x64",
       "type": "image/png"
     },
     {
-      "src": "/images/icon-512x512.png",
-      "sizes": "512x512",
+      "src": "/apple-icon",
+      "sizes": "180x180",
       "type": "image/png"
     }
   ]
