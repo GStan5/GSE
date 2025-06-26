@@ -1,14 +1,14 @@
 ### Test Google Apps Script Endpoint for GSE Audit
-
-POST https://script.google.com/macros/s/AKfycbyLgzMCZrrWHU5H2aGX77EUG6hL32NfwEOaR9zqlitsCrch0qI1jsKLx5U7p1iPSYjb/exec
+POST https://script.google.com/macros/s/AKfycbzg4y3m4KxfSoCzCtE3kheXha15bHkBlHgs0PZo_paenJR8fGaKUtKS5ynliLH_37E9/exec
 Content-Type: application/json
 
 {
-  "timestamp": "2025-06-25T19:00:00.000Z",
-  "businessName": "REST Client Test Co.",
-  "contactName": "VS Code Tester",
-  "email": "restclient@gse.codes",
+  "timestamp": "2025-06-26T19:00:00.000Z",
+  "businessName": "CORS Test Co.asdasdasdasdasd",
+  "contactName": "CORS Tester",
+  "email": "corstest@gse.codes",
   "phone": "555-555-5555",
-  "website": "https://restclient.test",
-  "address": "123 Visual St, Code City"
+  "website": "https://corstest.example",
+  "address": "123 CORS St, Test City",
+  "competitors": ["Test Competitor A", "Test Competitor B", ""]
 }
