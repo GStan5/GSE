@@ -19,8 +19,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Forward to Google Apps Script
-    const GOOGLE_SCRIPT_URL = process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL;
+    // Forward to Google Apps Script using server-side environment variable
+    const GOOGLE_SCRIPT_URL = process.env.GOOGLE_APPS_SCRIPT_URL;
 
     if (GOOGLE_SCRIPT_URL) {
       try {

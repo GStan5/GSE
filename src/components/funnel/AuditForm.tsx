@@ -190,13 +190,10 @@ function AuditForm({ onSubmit }: AuditFormProps) {
     }
   }, [getSentry]);
 
-  // Debug: Log the environment variable (only on client side to avoid hydration issues)
+  // Debug: Log API endpoint status (only on client side to avoid hydration issues)
   useEffect(() => {
     if (isClient && typeof window !== "undefined") {
-      console.log(
-        "Google Apps Script URL:",
-        process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL
-      );
+      console.log("Form submission will use API route: /api/submit-audit");
     }
   }, [isClient]);
 
@@ -575,33 +572,12 @@ function AuditForm({ onSubmit }: AuditFormProps) {
       setIsSubmitting(true);
       setSubmissionStatus("processing");
 
-      // Use environment variable with fallback
-      const scriptUrl =
-        process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL ||
-        "https://script.google.com/macros/s/AKfycbzg4y3m4KxfSoCzCtE3kheXha15bHkBlHgs0PZo_paenJR8fGaKUtKS5ynliLH_37E9/exec";
+      // Use our secure API endpoint instead of direct Google Apps Script
+      const apiUrl = "/api/submit-audit";
 
-      console.log("Using script URL:", scriptUrl);
+      console.log("Submitting to secure API endpoint:", apiUrl);
 
-      if (!scriptUrl) {
-        console.error("❌ Google Apps Script URL not configured");
-
-        captureToSentry("exception", {
-          error: new Error("Google Apps Script URL not configured"),
-          options: {
-            tags: {
-              section: "audit_form_config",
-              errorType: "missing_env_var",
-            },
-          },
-        });
-
-        if (!isMobile) {
-          alert("Configuration error: Google Apps Script URL not found");
-        }
-        setIsSubmitting(false);
-        return;
-      }
-
+      // API endpoint is always available (internal route)
       // MOBILE-OPTIMIZED STRATEGY
       if (isMobile) {
         console.log("📱 Using mobile-optimized submission strategy");
@@ -643,18 +619,20 @@ function AuditForm({ onSubmit }: AuditFormProps) {
             console.log("📱 API route response:", result);
             return response;
           },
-          // Approach 2: Direct Google Apps Script with no-cors (only if API route fails)
+          // Approach 2: Alternative API call with different headers (fallback)
           async () => {
             console.log(
-              "📱 API route failed, trying direct Google Apps Script..."
+              "📱 API route failed, trying alternative API call..."
             );
-            return fetch(scriptUrl, {
+            return fetch(apiUrl, {
               method: "POST",
-              mode: "no-cors",
-              headers: { "Content-Type": "text/plain" },
+              headers: { 
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest"
+              },
               body: JSON.stringify({
                 ...submitData,
-                source: "mobile_direct_fallback", // Mark as fallback to avoid confusion
+                source: "mobile_api_fallback", // Mark as fallback
               }),
             });
           },
@@ -806,9 +784,9 @@ Source: Mobile Fallback
           setTimeout(() => reject(new Error("Request timeout")), 15000);
         });
 
-        const fetchPromise = fetch(scriptUrl, {
+        const fetchPromise = fetch(apiUrl, {
           method: "POST",
-          headers: { "Content-Type": "text/plain" },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             ...formData,
             timestamp: new Date().toISOString(),
@@ -883,7 +861,7 @@ Source: Mobile Fallback
               tags: { section: "audit_form_desktop", errorType: "unexpected" },
               extra: {
                 formData: formData,
-                scriptUrl: scriptUrl,
+                apiUrl: apiUrl,
               },
             },
           });
