@@ -51,14 +51,14 @@ export default function FunnelHero() {
             Gravix Strategic Edge
           </div>
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white mb-8 font-heading leading-none tracking-tight">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white mb-8 font-heading leading-relaxed tracking-tight py-2">
             <span className="block mb-2 animate-slide-in-left opacity-0 [animation-fill-mode:forwards] delay-200">
-              Dominate Your
+              Excel in Your
             </span>
             <span className="block mb-4 bg-gradient-to-r from-white via-ami-sand to-white bg-clip-text text-transparent">
               Local Market
             </span>
-            <span className="block text-3xl md:text-4xl lg:text-5xl xl:text-6xl bg-gradient-to-r from-solar-flare-coral via-yellow-400 to-solar-flare-coral bg-clip-text text-transparent font-extrabold animate-fade-in-up opacity-0 [animation-fill-mode:forwards] delay-600">
+            <span className="block text-3xl md:text-4xl lg:text-5xl xl:text-6xl bg-gradient-to-r from-solar-flare-coral via-yellow-400 to-solar-flare-coral bg-clip-text text-transparent font-extrabold animate-fade-in-up opacity-0 [animation-fill-mode:forwards] delay-600 pb-2">
               With AI-Powered Marketing
             </span>
           </h1>

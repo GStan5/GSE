@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Analytics from "@/components/Analytics";
+import SentryInit from "@/components/SentryInit";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -96,6 +97,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={`${inter.className} antialiased`}>
+        <SentryInit />
         <Analytics
           googleAnalyticsId={process.env.NEXT_PUBLIC_GA_ID}
           microsoftClarityId={process.env.NEXT_PUBLIC_CLARITY_ID}
