@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AuditFeatures from "@/components/funnel/AuditFeatures";
@@ -13,9 +13,17 @@ import FunnelHeroPro from "@/components/funnel/FunnelHeroProfessional";
 import { getLocationBySlug, getServiceBySlug } from "@/data/seo-slugs";
 
 function FunnelContent() {
+  const [isClient, setIsClient] = useState(false);
   const searchParams = useSearchParams();
-  const locationSlug = searchParams.get("location");
-  const serviceSlug = searchParams.get("service");
+  
+  // Only access search params after client hydration to prevent mismatch
+  const locationSlug = isClient ? searchParams.get("location") : null;
+  const serviceSlug = isClient ? searchParams.get("service") : null;
+
+  // Ensure client-side hydration
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const location = locationSlug ? getLocationBySlug(locationSlug) : null;
   const service = serviceSlug ? getServiceBySlug(serviceSlug) : null;
@@ -40,8 +48,8 @@ function FunnelContent() {
     // Handle form submission here - could send to API, analytics, etc.
     console.log("Form submitted:", enhancedFormData);
 
-    // Add analytics tracking with context
-    if (typeof window !== "undefined" && (window as any).gtag) {
+    // Add analytics tracking with context - only on client
+    if (isClient && typeof window !== "undefined" && (window as any).gtag) {
       (window as any).gtag("event", "form_submit", {
         event_category: "audit_request",
         location_context: location?.city || "general",
