@@ -15,7 +15,7 @@ import { getLocationBySlug, getServiceBySlug } from "@/data/seo-slugs";
 function FunnelContent() {
   const [isClient, setIsClient] = useState(false);
   const searchParams = useSearchParams();
-  
+
   // Only access search params after client hydration to prevent mismatch
   const locationSlug = isClient ? searchParams.get("location") : null;
   const serviceSlug = isClient ? searchParams.get("service") : null;

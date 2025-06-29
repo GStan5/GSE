@@ -1,9 +1,11 @@
 # Hydration Error Fixes for Mobile
 
 ## Overview
+
 This document summarizes all the fixes implemented to resolve hydration errors occurring on mobile devices in the GSE Next.js application.
 
 ## Root Cause Analysis
+
 Hydration errors occur when the server-rendered HTML doesn't match what React renders on the client side. Common causes in our application were:
 
 1. **Browser API Access During SSR**: Using `window`, `navigator`, and other browser APIs during server-side rendering
@@ -14,11 +16,14 @@ Hydration errors occur when the server-rendered HTML doesn't match what React re
 ## Fixes Implemented
 
 ### 1. Client-Side Hydration Guards
-**Files Modified**: 
+
+**Files Modified**:
+
 - `src/components/funnel/AuditForm.tsx`
 - `src/app/funnel/page.tsx`
 
 **Changes**:
+
 - Added `isClient` state to track when component has hydrated
 - All browser API access now guarded with `isClient && typeof window !== "undefined"`
 - Search params access delayed until after client hydration
@@ -35,24 +40,33 @@ const locationSlug = isClient ? searchParams.get("location") : null;
 ```
 
 ### 2. Enhanced Browser API Guards
+
 **Affected APIs**:
+
 - `window` object access
 - `navigator.userAgent` for mobile detection
 - `requestIdleCallback` for lazy loading
 
 **Before**:
+
 ```tsx
 const isMobile = navigator.userAgent.match(/Mobi|Android/i);
 ```
 
 **After**:
+
 ```tsx
-const isMobile = isClient && typeof window !== "undefined" && 
+const isMobile =
+  isClient &&
+  typeof window !== "undefined" &&
   typeof navigator !== "undefined" &&
-  navigator.userAgent.match(/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i);
+  navigator.userAgent.match(
+    /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+  );
 ```
 
 ### 3. Debounced Validation Fixes
+
 **Issue**: Debounced form validation was causing hydration mismatches
 **Solution**: Modified debounce hook to handle SSR properly
 
@@ -66,7 +80,7 @@ function useDebounce<T>(value: T, delay: number): T {
       setDebouncedValue(value);
       return;
     }
-    
+
     const handler = setTimeout(() => setDebouncedValue(value), delay);
     return () => clearTimeout(handler);
   }, [value, delay]);
@@ -79,11 +93,14 @@ const debouncedFormData = useDebounce(formData, isClient ? 150 : 0);
 ```
 
 ### 4. Mobile Timeout Logic
+
 **Issue**: Mobile detection for timeout duration was causing hydration issues
 **Solution**: Added comprehensive guards for mobile detection
 
 ```tsx
-const timeoutDuration = isClient && typeof window !== "undefined" &&
+const timeoutDuration =
+  isClient &&
+  typeof window !== "undefined" &&
   typeof navigator !== "undefined" &&
   navigator.userAgent.match(/Mobi|Android/i)
     ? 20000
@@ -91,6 +108,7 @@ const timeoutDuration = isClient && typeof window !== "undefined" &&
 ```
 
 ### 5. Analytics Tracking Guards
+
 **Issue**: Google Analytics calls during SSR
 **Solution**: Added client-side guards for all analytics calls
 
@@ -106,26 +124,31 @@ if (isClient && typeof window !== "undefined" && (window as any).gtag) {
 ```
 
 ### 6. Sentry Integration Safeguards
+
 **Issue**: Sentry calls during SSR could cause hydration issues
 **Solution**: All Sentry calls are now client-side guarded and non-blocking
 
 ```tsx
-const captureToSentry = useCallback(async (action: 'breadcrumb' | 'message' | 'exception', data: any) => {
-  // Non-blocking Sentry calls
-  startTransition(async () => {
-    try {
-      const Sentry = await getSentry();
-      if (!Sentry) return;
-      // ... Sentry operations
-    } catch (error) {
-      // Silently fail if Sentry is not available - don't block UI
-      console.debug('Sentry action failed:', error);
-    }
-  });
-}, [getSentry]);
+const captureToSentry = useCallback(
+  async (action: "breadcrumb" | "message" | "exception", data: any) => {
+    // Non-blocking Sentry calls
+    startTransition(async () => {
+      try {
+        const Sentry = await getSentry();
+        if (!Sentry) return;
+        // ... Sentry operations
+      } catch (error) {
+        // Silently fail if Sentry is not available - don't block UI
+        console.debug("Sentry action failed:", error);
+      }
+    });
+  },
+  [getSentry]
+);
 ```
 
 ### 7. Form State Consistency
+
 **Issue**: Form state differences between server and client
 **Solution**: Added key prop to maintain consistency
 
@@ -141,12 +164,14 @@ return (
 ## Testing Approach
 
 ### Development Testing
+
 1. Run `npm run dev` and check for hydration warnings in console
 2. Test on desktop and mobile browsers
 3. Check browser developer tools for hydration error messages
 4. Verify form functionality after fixes
 
 ### Production Testing
+
 1. Build application with `npm run build`
 2. Test production build on mobile devices
 3. Monitor Sentry for hydration-related errors
@@ -155,10 +180,12 @@ return (
 ## Mobile-Specific Considerations
 
 ### Timeout Adjustments
+
 - Desktop: 12 seconds success message timeout
 - Mobile: 20 seconds success message timeout (longer due to slower interactions)
 
 ### Performance Optimizations
+
 - Lazy loading of Sentry only on client-side
 - Debounced validation with client-side guards
 - Non-blocking analytics and error tracking
@@ -181,6 +208,7 @@ return (
 ## Browser Compatibility
 
 ### Supported Mobile Browsers
+
 - Safari on iOS (iPhone/iPad)
 - Chrome on Android
 - Firefox Mobile
@@ -188,6 +216,7 @@ return (
 - Edge Mobile
 
 ### API Fallbacks
+
 - `requestIdleCallback` with `setTimeout` fallback
 - Comprehensive `navigator` availability checks
 - Safe `window` object access patterns
@@ -195,11 +224,13 @@ return (
 ## Performance Impact
 
 ### Before Fixes
+
 - Potential hydration mismatches causing re-renders
 - Browser API errors on server-side
 - Possible flash of incorrect content
 
 ### After Fixes
+
 - Clean hydration with no mismatches
 - Faster Time to Interactive (TTI)
 - Consistent rendering across server and client
@@ -208,11 +239,13 @@ return (
 ## Monitoring
 
 ### Development
+
 - Watch for hydration warnings in browser console
 - Monitor React DevTools for unexpected re-renders
 - Check Next.js compilation warnings
 
 ### Production
+
 - Monitor Sentry for hydration-related errors
 - Track Core Web Vitals for performance impact
 - Watch for form submission success rates on mobile
