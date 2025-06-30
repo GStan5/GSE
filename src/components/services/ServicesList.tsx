@@ -12,7 +12,7 @@ export default function ServicesList() {
       title: "Custom Full Website Design & Development",
       description:
         "Complete custom website built from scratch with modern design, mobile responsiveness, and optimized for conversions.",
-      duration: "3-4 weeks",
+      duration: "4-12 weeks",
       deliverables: [
         "Custom responsive design",
         "Content management system",
@@ -83,7 +83,6 @@ export default function ServicesList() {
         "Calendar synchronization",
         "Automated confirmations",
         "Customer database",
-        "Reporting dashboard",
         "Mobile-friendly design",
       ],
       icon: (

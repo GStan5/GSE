@@ -44,7 +44,7 @@ export default function ServicesProcess() {
           />
         </svg>
       ),
-      highlight: "4-hour response",
+      highlight: "24-hour response",
     },
     {
       number: "03",
