@@ -294,7 +294,7 @@ export default function ServicesOverview() {
               </svg>
             </div>
             <h3 className="text-2xl font-bold text-nautical-blue mb-4 font-heading">
-              Custom Solutions & One-Time Projects
+              Quick Services | Custom Solutions | One-Time Projects
             </h3>
             <p className="text-charcoal-gray mb-6 max-w-3xl mx-auto leading-relaxed">
               Need something specific? We offer custom solutions and one-time
@@ -321,10 +321,10 @@ export default function ServicesOverview() {
               </div>
             </div>
             <Link
-              href="#contact"
+              href="/one-time-services"
               className="inline-block bg-nautical-blue hover:bg-nautical-blue/90 text-white px-8 py-3 rounded-lg font-bold transition-all duration-300 hover:shadow-lg"
             >
-              Discuss Your Project
+              Explore Custom Solutions
             </Link>
           </div>
         </div>

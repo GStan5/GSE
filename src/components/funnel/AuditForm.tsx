@@ -621,14 +621,12 @@ function AuditForm({ onSubmit }: AuditFormProps) {
           },
           // Approach 2: Alternative API call with different headers (fallback)
           async () => {
-            console.log(
-              "📱 API route failed, trying alternative API call..."
-            );
+            console.log("📱 API route failed, trying alternative API call...");
             return fetch(apiUrl, {
               method: "POST",
-              headers: { 
+              headers: {
                 "Content-Type": "application/json",
-                "X-Requested-With": "XMLHttpRequest"
+                "X-Requested-With": "XMLHttpRequest",
               },
               body: JSON.stringify({
                 ...submitData,

@@ -130,6 +130,24 @@ export default function Header() {
               <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-solar-flare-coral transition-all duration-300 group-hover:w-full"></span>
             </a>
             <Link
+              href="/one-time-services"
+              className={`transition-colors duration-300 font-semibold text-lg relative group ${
+                isActivePage("/one-time-services")
+                  ? "text-white"
+                  : "text-white/90 hover:text-white"
+              }`}
+              aria-label="Go to quick services page"
+            >
+              Quick Services
+              <span
+                className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 bg-solar-flare-coral transition-all duration-300 ${
+                  isActivePage("/one-time-services")
+                    ? "w-full"
+                    : "w-0 group-hover:w-full"
+                }`}
+              ></span>
+            </Link>
+            <Link
               href="/about"
               className={`transition-colors duration-300 font-semibold text-lg relative group ${
                 isActivePage("/about")
@@ -276,6 +294,18 @@ export default function Header() {
               >
                 Services
               </a>
+              <Link
+                href="/one-time-services"
+                onClick={() => setIsMenuOpen(false)}
+                className={`text-lg font-semibold transition-colors duration-300 py-2 px-4 rounded-lg ${
+                  isActivePage("/one-time-services")
+                    ? "text-white bg-solar-flare-coral/20 border-l-4 border-solar-flare-coral"
+                    : "text-white/90 hover:text-white hover:bg-white/10"
+                }`}
+                aria-label="Go to quick services page"
+              >
+                Quick Services
+              </Link>
               <Link
                 href="/about"
                 onClick={() => setIsMenuOpen(false)}
