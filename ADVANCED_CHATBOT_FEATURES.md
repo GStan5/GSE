@@ -210,7 +210,11 @@ Maximum Score: 100 points
 ### Environment Variables
 
 ```env
-NEXT_PUBLIC_OPENAI_API_KEY=your-openai-api-key
+# OpenAI Configuration (SERVER-SIDE ONLY)
+OPENAI_API_KEY=your-openai-api-key
+
+# Admin Dashboard Password (SERVER-SIDE ONLY)
+ADMIN_PASSWORD=gse2025
 NEXT_PUBLIC_ANALYTICS_ID=your-analytics-id
 NEXT_PUBLIC_NOTIFICATIONS_ENABLED=true
 ```

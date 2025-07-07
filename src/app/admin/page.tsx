@@ -29,15 +29,31 @@ export default function AdminDashboard() {
     setAnalyticsData(rawData);
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === "gse2025") {
-      setIsAuthenticated(true);
-      sessionStorage.setItem("admin_authenticated", "true");
-      loadDashboardData();
-      setError("");
-    } else {
-      setError("Invalid password");
+    setError("");
+
+    try {
+      const response = await fetch("/api/admin/auth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ password }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setIsAuthenticated(true);
+        sessionStorage.setItem("admin_authenticated", "true");
+        loadDashboardData();
+        setPassword("");
+      } else {
+        setError(data.error || "Authentication failed");
+      }
+    } catch (error) {
+      setError("Connection error. Please try again.");
     }
   };
 

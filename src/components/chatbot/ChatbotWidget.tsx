@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChatbotMessages } from "./ChatbotMessages";
 import { ChatbotInput } from "./ChatbotInput";
 import { ChatbotHeader } from "./ChatbotHeader";
@@ -9,6 +9,7 @@ import { useChatbot } from "@/hooks/useChatbot";
 export default function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   const {
     messages,
@@ -19,6 +20,11 @@ export default function ChatbotWidget() {
     leadScore,
     userLanguage,
   } = useChatbot();
+
+  // Fix hydration by only rendering on client
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleSendMessage = async (message: string) => {
     await sendMessage(message);
@@ -37,6 +43,11 @@ export default function ChatbotWidget() {
     setIsOpen(true);
     setIsMinimized(false);
   };
+
+  // Don't render anything on server-side to prevent hydration mismatch
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <>

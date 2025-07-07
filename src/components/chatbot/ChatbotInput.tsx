@@ -29,11 +29,12 @@ export function ChatbotInput({
     }
   };
 
+  // Use stable English quick replies to prevent constant language switching
   const quickReplies = [
-    getTranslation("quickReplies.services", userLanguage),
-    getTranslation("quickReplies.pricing", userLanguage),
-    getTranslation("quickReplies.consultation", userLanguage),
-    getTranslation("quickReplies.contact", userLanguage),
+    "Tell me about your services",
+    "What are your prices?",
+    "Book a consultation",
+    "Contact information",
   ];
 
   const handleQuickReply = (reply: string) => {
@@ -67,7 +68,7 @@ export function ChatbotInput({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={handleKeyPress}
-          placeholder={getTranslation("sendMessage", userLanguage)}
+          placeholder="Type your message..."
           disabled={isLoading}
           className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-nautical-blue focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
         />

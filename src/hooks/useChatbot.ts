@@ -32,26 +32,34 @@ export function useChatbot() {
 
   // Initialize conversation on first load
   useEffect(() => {
-    // Start fresh conversation
-    const welcomeMessage: Message = {
-      id: "1",
-      text: getTranslation("welcome", userLanguage),
-      sender: "bot",
-      timestamp: new Date(),
-    };
-    setMessages([welcomeMessage]);
+    // Only initialize once when component mounts
+    if (messages.length === 0) {
+      const welcomeMessage: Message = {
+        id: "1",
+        text: "👋 Hi! I'm your GSE Assistant. I'm here to help you learn about our digital marketing services. How can I assist you today?",
+        sender: "bot",
+        timestamp: new Date(),
+        language: "en", // Keep welcome message in English
+      };
+      setMessages([welcomeMessage]);
+    }
 
     // Request notification permission
     notifications.requestPermission();
-  }, [userLanguage, notifications]);
+  }, []); // Empty dependency array to run only once
+
+  // Remove the language change effect that was causing re-renders
 
   const sendMessage = useCallback(
     async (text: string) => {
       if (!text.trim()) return;
 
-      // Detect language from user input
+      // Detect language for this specific message only
       const detectedLang = detectLanguage(text);
-      if (detectedLang !== userLanguage) {
+      
+      // Only update the global language if this is the first user message
+      // and it's different from the default English
+      if (messages.length <= 1 && detectedLang !== "en" && userLanguage === "en") {
         setUserLanguage(detectedLang);
       }
 
@@ -60,7 +68,7 @@ export function useChatbot() {
         text: text.trim(),
         sender: "user",
         timestamp: new Date(),
-        language: detectedLang,
+        language: detectedLang, // Store language per message
       };
 
       setMessages((prev) => [...prev, userMessage]);
@@ -74,30 +82,22 @@ export function useChatbot() {
           { role: "user" as const, content: text },
         ];
 
-        // Try AI response first
+        // Try AI response first (server-side API handles availability)
         let response: ChatbotResponse;
-        const useAI =
-          process.env.NEXT_PUBLIC_OPENAI_API_KEY &&
-          process.env.NEXT_PUBLIC_OPENAI_API_KEY !== "your-openai-api-key-here";
 
-        if (useAI) {
-          try {
-            response = await getAIResponse(text, newHistory);
+        try {
+          response = await getAIResponse(text, newHistory);
 
-            // Update conversation history with AI response
-            setConversationHistory([
-              ...newHistory,
-              { role: "assistant", content: response.message },
-            ]);
-          } catch (aiError) {
-            console.log(
-              "AI failed, falling back to rule-based response:",
-              aiError
-            );
-            response = await getChatbotResponse(text);
-          }
-        } else {
-          // Use rule-based response if no API key
+          // Update conversation history with AI response
+          setConversationHistory([
+            ...newHistory,
+            { role: "assistant", content: response.message },
+          ]);
+        } catch (aiError) {
+          console.log(
+            "AI failed, falling back to rule-based response:",
+            aiError
+          );
           response = await getChatbotResponse(text);
         }
 
@@ -110,7 +110,7 @@ export function useChatbot() {
           sender: "bot",
           timestamp: new Date(),
           actions: response.actions,
-          language: detectedLang,
+          language: detectedLang, // Bot responds in the same language as user's message
         };
 
         setMessages((prev) => {
@@ -188,14 +188,19 @@ export function useChatbot() {
   const clearMessages = useCallback(() => {
     const welcomeMessage: Message = {
       id: "1",
-      text: getTranslation("welcome", userLanguage),
+      text: "👋 Hi! I'm your GSE Assistant. I'm here to help you learn about our digital marketing services. How can I assist you today?",
       sender: "bot",
       timestamp: new Date(),
+      language: "en", // Keep welcome message in English
     };
     setMessages([welcomeMessage]);
     setConversationHistory([]);
     setLeadScore(0);
-  }, [userLanguage]);
+  }, []);
+
+  const changeLanguage = useCallback((newLanguage: string) => {
+    setUserLanguage(newLanguage);
+  }, []);
 
   return {
     messages,
@@ -205,6 +210,7 @@ export function useChatbot() {
     isTyping,
     leadScore,
     userLanguage,
+    changeLanguage,
   };
 }
 

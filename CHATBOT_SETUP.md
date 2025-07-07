@@ -22,8 +22,13 @@ Your chatbot now uses a hybrid approach:
 
 1. Copy `.env.local.example` to `.env.local`
 2. Replace `your-openai-api-key-here` with your actual API key:
+
    ```
-   NEXT_PUBLIC_OPENAI_API_KEY=sk-your-actual-key-here
+   # OpenAI Configuration (SERVER-SIDE ONLY)
+   OPENAI_API_KEY=sk-your-actual-key-here
+
+   # Admin Dashboard Password (SERVER-SIDE ONLY)
+   ADMIN_PASSWORD=gse2025
    ```
 
 ### 3. Test the Chatbot

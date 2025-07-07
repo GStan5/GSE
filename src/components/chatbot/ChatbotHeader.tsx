@@ -48,11 +48,6 @@ export function ChatbotHeader({
                 </span>
               </div>
             )}
-            {userLanguage && userLanguage !== "en" && (
-              <span className="text-xs text-ami-sand uppercase">
-                {userLanguage}
-              </span>
-            )}
           </div>
         </div>
       </div>

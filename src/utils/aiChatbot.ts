@@ -1,18 +1,4 @@
-import OpenAI from "openai";
 import { ChatbotResponse } from "@/types/chatbot";
-
-// Initialize OpenAI client only when needed
-let openai: OpenAI | null = null;
-
-function getOpenAIClient() {
-  if (!openai && process.env.NEXT_PUBLIC_OPENAI_API_KEY) {
-    openai = new OpenAI({
-      apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-      dangerouslyAllowBrowser: true, // Only for client-side usage
-    });
-  }
-  return openai;
-}
 
 const BUSINESS_CONTEXT = `
 You are a helpful AI assistant for Gravix Strategic Edge (GSE), a digital marketing agency specializing in AI-powered local marketing solutions. 
@@ -73,41 +59,26 @@ export async function getAIResponse(
   conversationHistory: Array<{ role: "user" | "assistant"; content: string }>
 ): Promise<ChatbotResponse> {
   try {
-    const client = getOpenAIClient();
-
-    if (!client) {
-      throw new Error("OpenAI client not available");
-    }
-
-    // Prepare conversation context
-    const messages = [
-      {
-        role: "system" as const,
-        content: BUSINESS_CONTEXT,
+    // Use server-side API route for OpenAI calls
+    const response = await fetch("/api/chatbot", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      ...conversationHistory,
-      {
-        role: "user" as const,
-        content: userMessage,
-      },
-    ];
-
-    const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini", // Cost-effective model - Change this to switch models
-      // Available options:
-      // 'gpt-4o-mini' - Best balance of cost/quality (~$0.15/1M tokens)
-      // 'gpt-4o' - Highest quality, more expensive (~$2.50/1M tokens)
-      // 'gpt-3.5-turbo' - Fastest & cheapest (~$0.50/1M tokens)
-      messages: messages,
-      max_tokens: 300,
-      temperature: 0.7,
-      presence_penalty: 0.6,
-      frequency_penalty: 0.3,
+      body: JSON.stringify({
+        message: userMessage,
+        conversationHistory,
+        businessContext: BUSINESS_CONTEXT,
+      }),
     });
 
-    const aiResponse =
-      completion.choices[0]?.message?.content ||
-      "I apologize, but I'm having trouble processing your request right now. Please contact us directly at (941) 900-3341 or Marketing@GSE.codes.";
+    const data = await response.json();
+
+    if (!data.success) {
+      throw new Error(data.error || "Failed to get AI response");
+    }
+
+    const aiResponse = data.response;
 
     // Determine if we should add action buttons based on the response content
     const actions = [];
@@ -154,7 +125,7 @@ export async function getAIResponse(
       quickReplies: generateQuickReplies(aiResponse),
     };
   } catch (error) {
-    console.error("OpenAI API Error:", error);
+    console.error("AI API Error:", error);
 
     // Fallback to rule-based response
     return {
