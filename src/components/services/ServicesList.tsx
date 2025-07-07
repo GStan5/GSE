@@ -11,16 +11,14 @@ export default function ServicesList() {
       category: "website",
       title: "Custom Full Website Design & Development",
       description:
-        "Complete custom website built from scratch with modern design, mobile responsiveness, and optimized for conversions.",
-      duration: "4-12 weeks",
+        "Complete custom website built from scratch with modern design, mobile responsiveness, and optimized for conversions. *Website hosting available but not required.",
+      duration: "4-24 weeks",
       deliverables: [
         "Custom responsive design",
         "Content management system",
         "SEO optimization",
         "Performance optimization",
-        "Mobile-first approach",
-        "Analytics integration",
-        "Ongoing support included",
+        "Mobile design included",
       ],
       icon: (
         <svg
@@ -44,7 +42,7 @@ export default function ServicesList() {
       title: "Brand Refresh & Rebranding Kit",
       description:
         "Complete brand makeover including logo design, color palette, typography, and brand guidelines to modernize your business.",
-      duration: "2-3 weeks",
+      duration: "3-4 weeks",
       deliverables: [
         "Logo design & variations",
         "Brand color palette",
@@ -75,15 +73,14 @@ export default function ServicesList() {
       category: "automation",
       title: "Tour & Rental Booking System Setup",
       description:
-        "Automated booking system for tours or rentals with payment processing, calendar integration, and customer management.",
-      duration: "2-3 weeks",
+        "Automated booking system for tours or rentals with payment processing, calendar integration, and customer management. *Monthly hosting fees required for system operation.",
+      duration: "3-4 weeks",
       deliverables: [
-        "Custom booking interface",
-        "Payment gateway integration",
-        "Calendar synchronization",
+        "Easy-to-use booking interface",
+        "Stripe payment integration",
+        "Calendar setup & synchronization",
         "Automated confirmations",
         "Customer database",
-        "Mobile-friendly design",
       ],
       icon: (
         <svg
@@ -106,16 +103,14 @@ export default function ServicesList() {
       category: "automation",
       title: "Chatbot Service System Setup",
       description:
-        "AI-powered chatbot to handle customer inquiries, bookings, and support 24/7 with seamless integration to your website.",
-      duration: "1-2 weeks",
+        "AI-powered chatbot to handle customer inquiries, bookings, and support 24/7 with seamless integration to your website. *Monthly hosting fees required for AI service.",
+      duration: "2-4 weeks",
       deliverables: [
         "Custom chatbot development",
         "AI conversation training",
         "Website integration",
         "Lead capture setup",
-        "Analytics dashboard",
         "Multi-platform deployment",
-        "Ongoing optimization",
       ],
       icon: (
         <svg
@@ -145,9 +140,7 @@ export default function ServicesList() {
         "SEO optimization",
         "Conversion optimization",
         "Mobile responsiveness",
-        "Analytics integration",
         "Lead capture forms",
-        "A/B testing setup",
       ],
       icon: (
         <svg
@@ -178,7 +171,6 @@ export default function ServicesList() {
         "Technical SEO fixes",
         "Content optimization",
         "Local SEO setup",
-        "Google Search Console setup",
         "Performance report",
       ],
       icon: (
@@ -203,13 +195,12 @@ export default function ServicesList() {
       title: "Initial Google Business Profile Setup",
       description:
         "Complete setup and optimization of your Google Business Profile to improve local search visibility and attract customers.",
-      duration: "3-5 business days",
+      duration: "7-10 business days",
       deliverables: [
         "Profile creation & verification",
         "Business information optimization",
         "Photo uploads & optimization",
         "Service/product listings",
-        "Review management setup",
         "Post scheduling strategy",
       ],
       icon: (
@@ -240,7 +231,7 @@ export default function ServicesList() {
       title: "Social Media Branding Setup",
       description:
         "Professional social media profile setup across major platforms with consistent branding and optimization for engagement.",
-      duration: "5-7 business days",
+      duration: "3-7 business days",
       deliverables: [
         "Profile setup (3 platforms)",
         "Custom graphics & covers",
@@ -271,7 +262,7 @@ export default function ServicesList() {
       title: "Blog Setup on Existing Website",
       description:
         "Professional blog integration into your existing website with SEO optimization and content management system setup.",
-      duration: "3-5 business days",
+      duration: "7-10 business days",
       deliverables: [
         "Blog system integration",
         "Custom blog design",
@@ -324,7 +315,7 @@ export default function ServicesList() {
           <p className="text-xl text-charcoal-gray max-w-3xl mx-auto">
             Expert marketing and development services delivered quickly without
             long-term contracts. Choose exactly what you need to grow your
-            business today.
+            business today. Some services may require separate hosting fees.
           </p>
         </div>
 
