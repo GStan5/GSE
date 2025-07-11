@@ -67,7 +67,8 @@ CRITICAL INSTRUCTIONS:
 
 export async function getAIResponse(
   userMessage: string,
-  conversationHistory: Array<{ role: "user" | "assistant"; content: string }>
+  conversationHistory: Array<{ role: "user" | "assistant"; content: string }>,
+  sessionId?: string
 ): Promise<ChatbotResponse> {
   try {
     // Use server-side API route for OpenAI calls
@@ -80,6 +81,7 @@ export async function getAIResponse(
         message: userMessage,
         conversationHistory,
         businessContext: BUSINESS_CONTEXT,
+        sessionId: sessionId || `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       }),
     });
 

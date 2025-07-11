@@ -145,7 +145,7 @@ export function useChatbot() {
         let response: ChatbotResponse;
 
         try {
-          response = await getAIResponse(text, newHistory);
+          response = await getAIResponse(text, newHistory, sessionId);
 
           // Update conversation history with AI response
           setConversationHistory([
