@@ -110,7 +110,7 @@ Remember: You are specifically analyzing GSE's chatbot analytics to help improve
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: messages,
-      max_tokens: 500, // Longer responses for detailed analysis
+      max_tokens: 1500, // Much longer responses for comprehensive analysis
       temperature: 0.3, // Lower temperature for more focused, analytical responses
       presence_penalty: 0.1,
       frequency_penalty: 0.1,
