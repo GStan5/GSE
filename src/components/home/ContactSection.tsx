@@ -2,6 +2,11 @@
 
 import Link from "next/link";
 import { CONTACT_INFO, formatPhone } from "@/config/contact";
+import {
+  trackPhoneClick,
+  trackEmailClick,
+  trackConversion,
+} from "@/utils/tracking";
 
 export default function ContactSection() {
   return (
@@ -31,6 +36,10 @@ export default function ContactSection() {
             {/* Phone */}
             <a
               href={`tel:${formatPhone.tel}`}
+              onClick={() => {
+                trackPhoneClick();
+                trackConversion("phone");
+              }}
               className="group bg-gradient-to-r from-digital-teal/5 to-digital-teal/10 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 border border-digital-teal/10 hover:border-digital-teal/30 hover:bg-digital-teal/5 cursor-pointer block"
             >
               <div className="flex items-center gap-4">
@@ -81,6 +90,10 @@ export default function ContactSection() {
             {/* Email */}
             <a
               href={`mailto:${CONTACT_INFO.email}`}
+              onClick={() => {
+                trackEmailClick();
+                trackConversion("email");
+              }}
               className="group bg-gradient-to-r from-solar-flare-coral/5 to-solar-flare-coral/10 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 border border-solar-flare-coral/10 hover:border-solar-flare-coral/30 hover:bg-solar-flare-coral/5 cursor-pointer block"
             >
               <div className="flex items-center gap-4">

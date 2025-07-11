@@ -133,10 +133,28 @@ export class ChatbotAnalytics {
     return ChatbotAnalytics.instance;
   }
 
-  logConversation(data: ChatAnalytics): void {
+  async logConversation(data: ChatAnalytics): Promise<void> {
+    // Store locally for immediate access
     this.analytics.push(data);
 
-    // Store in localStorage for persistence
+    // Send to server-side API
+    try {
+      const response = await fetch("/api/analytics", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        console.error("Failed to save analytics to server");
+      }
+    } catch (error) {
+      console.error("Error saving analytics to server:", error);
+    }
+
+    // Also keep local storage as backup
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem("chatbot_analytics") || "[]";
       const existingData = JSON.parse(stored);
@@ -146,6 +164,22 @@ export class ChatbotAnalytics {
 
     // Send to analytics service (implement your preferred analytics)
     this.sendToAnalytics(data);
+  }
+
+  async loadFromServer(): Promise<void> {
+    try {
+      const response = await fetch("/api/analytics");
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          this.analytics = result.data.analytics || [];
+        }
+      }
+    } catch (error) {
+      console.error("Error loading analytics from server:", error);
+      // Fallback to localStorage
+      this.loadFromStorage();
+    }
   }
 
   private sendToAnalytics(data: ChatAnalytics): void {
@@ -193,6 +227,40 @@ export class ChatbotAnalytics {
         return acc;
       }, {} as Record<string, number>),
     };
+  }
+
+  async clearAnalytics(): Promise<void> {
+    this.analytics = [];
+
+    // Clear server-side data
+    try {
+      await fetch("/api/analytics", { method: "DELETE" });
+    } catch (error) {
+      console.error("Error clearing server analytics:", error);
+    }
+
+    // Clear local storage
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("chatbot_analytics");
+    }
+  }
+
+  async refreshData(): Promise<void> {
+    await this.loadFromServer();
+  }
+
+  private loadFromStorage(): void {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("chatbot_analytics");
+      if (stored) {
+        try {
+          this.analytics = JSON.parse(stored);
+        } catch (error) {
+          console.error("Error loading analytics from storage:", error);
+          this.analytics = [];
+        }
+      }
+    }
   }
 }
 

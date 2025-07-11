@@ -32,21 +32,76 @@ export function useChatbot() {
 
   // Initialize conversation on first load
   useEffect(() => {
-    // Only initialize once when component mounts
-    if (messages.length === 0) {
+    // Load chat history from localStorage
+    const savedMessages = localStorage.getItem("chatbot_messages");
+    const savedHistory = localStorage.getItem("chatbot_conversation_history");
+    const savedLeadScore = localStorage.getItem("chatbot_lead_score");
+
+    if (savedMessages) {
+      try {
+        const parsedMessages = JSON.parse(savedMessages).map((msg: any) => ({
+          ...msg,
+          timestamp: new Date(msg.timestamp),
+        }));
+        setMessages(parsedMessages);
+      } catch (error) {
+        console.error("Error loading saved messages:", error);
+      }
+    } else {
+      // Only add welcome message if no saved messages
       const welcomeMessage: Message = {
         id: "1",
         text: "👋 Hi! I'm your GSE Assistant. I'm here to help you learn about our digital marketing services. How can I assist you today?",
         sender: "bot",
         timestamp: new Date(),
-        language: "en", // Keep welcome message in English
+        language: "en",
       };
       setMessages([welcomeMessage]);
     }
 
+    if (savedHistory) {
+      try {
+        setConversationHistory(JSON.parse(savedHistory));
+      } catch (error) {
+        console.error("Error loading conversation history:", error);
+      }
+    }
+
+    if (savedLeadScore) {
+      try {
+        setLeadScore(parseInt(savedLeadScore));
+      } catch (error) {
+        console.error("Error loading lead score:", error);
+      }
+    }
+
     // Request notification permission
     notifications.requestPermission();
-  }, []); // Empty dependency array to run only once
+  }, []); // Remove dependencies to run only once
+
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem("chatbot_messages", JSON.stringify(messages));
+    }
+  }, [messages]);
+
+  // Save conversation history to localStorage whenever it changes
+  useEffect(() => {
+    if (conversationHistory.length > 0) {
+      localStorage.setItem(
+        "chatbot_conversation_history",
+        JSON.stringify(conversationHistory)
+      );
+    }
+  }, [conversationHistory]);
+
+  // Save lead score to localStorage whenever it changes
+  useEffect(() => {
+    if (leadScore > 0) {
+      localStorage.setItem("chatbot_lead_score", leadScore.toString());
+    }
+  }, [leadScore]);
 
   // Remove the language change effect that was causing re-renders
 
@@ -56,10 +111,14 @@ export function useChatbot() {
 
       // Detect language for this specific message only
       const detectedLang = detectLanguage(text);
-      
+
       // Only update the global language if this is the first user message
       // and it's different from the default English
-      if (messages.length <= 1 && detectedLang !== "en" && userLanguage === "en") {
+      if (
+        messages.length <= 1 &&
+        detectedLang !== "en" &&
+        userLanguage === "en"
+      ) {
         setUserLanguage(detectedLang);
       }
 
@@ -191,11 +250,16 @@ export function useChatbot() {
       text: "👋 Hi! I'm your GSE Assistant. I'm here to help you learn about our digital marketing services. How can I assist you today?",
       sender: "bot",
       timestamp: new Date(),
-      language: "en", // Keep welcome message in English
+      language: "en",
     };
     setMessages([welcomeMessage]);
     setConversationHistory([]);
     setLeadScore(0);
+
+    // Clear localStorage
+    localStorage.removeItem("chatbot_messages");
+    localStorage.removeItem("chatbot_conversation_history");
+    localStorage.removeItem("chatbot_lead_score");
   }, []);
 
   const changeLanguage = useCallback((newLanguage: string) => {

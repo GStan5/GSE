@@ -11,6 +11,11 @@ import FunnelFAQ from "@/components/funnel/FunnelFAQ";
 import StructuredData from "@/components/seo/StructuredData";
 import FunnelHeroPro from "@/components/funnel/FunnelHeroProfessional";
 import { getLocationBySlug, getServiceBySlug } from "@/data/seo-slugs";
+import {
+  trackConsultationRequest,
+  trackConversion,
+  trackFunnelStep,
+} from "@/utils/tracking";
 
 function FunnelContent() {
   const [isClient, setIsClient] = useState(false);
@@ -44,6 +49,11 @@ function FunnelContent() {
       sourceService: service?.service || null,
       referralSlug: locationSlug || serviceSlug || null,
     };
+
+    // Track conversion events
+    trackConsultationRequest("audit_funnel");
+    trackConversion("consultation", 1);
+    trackFunnelStep("form_submitted", true);
 
     // Handle form submission here - could send to API, analytics, etc.
     console.log("Form submitted:", enhancedFormData);

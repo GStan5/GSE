@@ -5,6 +5,7 @@ import { ChatbotMessages } from "./ChatbotMessages";
 import { ChatbotInput } from "./ChatbotInput";
 import { ChatbotHeader } from "./ChatbotHeader";
 import { useChatbot } from "@/hooks/useChatbot";
+import { trackChatbotEvent } from "@/utils/tracking";
 
 export default function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,12 +28,14 @@ export default function ChatbotWidget() {
   }, []);
 
   const handleSendMessage = async (message: string) => {
+    trackChatbotEvent("message_sent", message.substring(0, 50));
     await sendMessage(message);
   };
 
   const handleClose = () => {
     setIsOpen(false);
     setIsMinimized(false);
+    trackChatbotEvent("closed");
   };
 
   const handleMinimize = () => {
@@ -42,6 +45,7 @@ export default function ChatbotWidget() {
   const handleOpen = () => {
     setIsOpen(true);
     setIsMinimized(false);
+    trackChatbotEvent("opened");
   };
 
   // Don't render anything on server-side to prevent hydration mismatch

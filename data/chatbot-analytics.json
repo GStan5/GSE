@@ -1,0 +1,212 @@
+[
+  {
+    "sessionId": "session_1752257407048",
+    "timestamp": "2025-07-11T18:10:28.813Z",
+    "messageCount": 3,
+    "leadScore": 0,
+    "topicsCovered": [],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752257429226_hd69v5xx8"
+  },
+  {
+    "sessionId": "session_1752257407048",
+    "timestamp": "2025-07-11T18:10:28.812Z",
+    "messageCount": 3,
+    "leadScore": 0,
+    "topicsCovered": [],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752257429264_zfca2bnqv"
+  },
+  {
+    "sessionId": "session_1752257709693",
+    "timestamp": "2025-07-11T18:15:17.371Z",
+    "messageCount": 3,
+    "leadScore": 0,
+    "topicsCovered": [],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752257717785_r61r0lb9o"
+  },
+  {
+    "sessionId": "session_1752257709693",
+    "timestamp": "2025-07-11T18:15:17.370Z",
+    "messageCount": 3,
+    "leadScore": 0,
+    "topicsCovered": [],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752257717822_wqa6pj9m9"
+  },
+  {
+    "sessionId": "session_1752257709693",
+    "timestamp": "2025-07-11T18:15:57.596Z",
+    "messageCount": 5,
+    "leadScore": 0,
+    "topicsCovered": [],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752257757718_twfjem10l"
+  },
+  {
+    "sessionId": "session_1752257709693",
+    "timestamp": "2025-07-11T18:15:57.595Z",
+    "messageCount": 5,
+    "leadScore": 0,
+    "topicsCovered": [],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752257757750_vtpyojzop"
+  },
+  {
+    "sessionId": "session_1752257709693",
+    "timestamp": "2025-07-11T18:16:54.991Z",
+    "messageCount": 7,
+    "leadScore": 10,
+    "topicsCovered": [],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752257815099_sk66ffm5m"
+  },
+  {
+    "sessionId": "session_1752257709693",
+    "timestamp": "2025-07-11T18:16:54.991Z",
+    "messageCount": 7,
+    "leadScore": 10,
+    "topicsCovered": [],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752257815117_6tvcx8m1g"
+  },
+  {
+    "sessionId": "session_1752257709693",
+    "timestamp": "2025-07-11T18:17:07.810Z",
+    "messageCount": 9,
+    "leadScore": 35,
+    "topicsCovered": [
+      "pricing"
+    ],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752257827933_3415w41le"
+  },
+  {
+    "sessionId": "session_1752257709693",
+    "timestamp": "2025-07-11T18:17:07.810Z",
+    "messageCount": 9,
+    "leadScore": 35,
+    "topicsCovered": [
+      "pricing"
+    ],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752257827950_tuhg8rfi2"
+  },
+  {
+    "sessionId": "session_1752257709693",
+    "timestamp": "2025-07-11T18:17:23.791Z",
+    "messageCount": 11,
+    "leadScore": 35,
+    "topicsCovered": [
+      "pricing"
+    ],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752257843918_iohkw7d8v"
+  },
+  {
+    "sessionId": "session_1752257709693",
+    "timestamp": "2025-07-11T18:17:23.792Z",
+    "messageCount": 11,
+    "leadScore": 35,
+    "topicsCovered": [
+      "pricing"
+    ],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752257843932_vpx55dxnp"
+  },
+  {
+    "sessionId": "session_1752257709693",
+    "timestamp": "2025-07-11T18:17:36.165Z",
+    "messageCount": 13,
+    "leadScore": 55,
+    "topicsCovered": [
+      "pricing"
+    ],
+    "conversationOutcome": "info",
+    "userLanguage": "fr",
+    "responseTime": 1000,
+    "id": "1752257856297_zql4g52cf"
+  },
+  {
+    "sessionId": "session_1752257709693",
+    "timestamp": "2025-07-11T18:17:36.166Z",
+    "messageCount": 13,
+    "leadScore": 55,
+    "topicsCovered": [
+      "pricing"
+    ],
+    "conversationOutcome": "info",
+    "userLanguage": "fr",
+    "responseTime": 1000,
+    "id": "1752257856404_k7fxy63oy"
+  },
+  {
+    "sessionId": "session_1752259110218",
+    "timestamp": "2025-07-11T18:39:58.789Z",
+    "messageCount": 3,
+    "leadScore": 0,
+    "topicsCovered": [],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752259198932_k7af18isi"
+  },
+  {
+    "sessionId": "session_1752259110218",
+    "timestamp": "2025-07-11T18:39:58.790Z",
+    "messageCount": 3,
+    "leadScore": 0,
+    "topicsCovered": [],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752259198950_hd56748z9"
+  },
+  {
+    "sessionId": "session_1752259202702",
+    "timestamp": "2025-07-11T18:40:15.981Z",
+    "messageCount": 5,
+    "leadScore": 0,
+    "topicsCovered": [],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752259216111_lbs9srhrb"
+  },
+  {
+    "sessionId": "session_1752259202702",
+    "timestamp": "2025-07-11T18:40:15.981Z",
+    "messageCount": 5,
+    "leadScore": 0,
+    "topicsCovered": [],
+    "conversationOutcome": "info",
+    "userLanguage": "en",
+    "responseTime": 1000,
+    "id": "1752259216144_gqyr5z4wt"
+  }
+]

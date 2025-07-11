@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import Analytics from "@/components/Analytics";
 import SentryInit from "@/components/SentryInit";
 import ChatbotWidget from "@/components/chatbot/ChatbotWidget";
+import PageEngagementTracker from "@/components/PageEngagementTracker";
+import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -98,11 +100,33 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={`${inter.className} antialiased`}>
+        {/* Google Analytics */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+                  page_title: document.title,
+                  page_location: window.location.href,
+                });
+              `}
+            </Script>
+          </>
+        )}
+
         <SentryInit />
         <Analytics
           googleAnalyticsId={process.env.NEXT_PUBLIC_GA_ID}
           microsoftClarityId={process.env.NEXT_PUBLIC_CLARITY_ID}
         />
+        <PageEngagementTracker />
         {children}
         <ChatbotWidget />
       </body>
